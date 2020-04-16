@@ -1,0 +1,3 @@
+export const config = {
+    GOOGLE_RECAPTCHA_SITEKEY : '6LdByooUAAAAAL-8TPr6YCvRx4Gf5CIVDkmOH3Di'
+}

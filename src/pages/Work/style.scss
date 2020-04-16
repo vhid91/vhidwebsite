@@ -1,0 +1,118 @@
+.work {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+
+    h1 {
+        padding: 10px;
+        color: #fff;
+    }
+
+    .text-has-shadows {
+        color: #000;
+        text-shadow: 1px 2px gray;
+    }
+    
+    .timeLine {
+        margin: auto;
+        overflow: hidden;
+        width: 80vw;
+
+        .card {
+            .year {
+                color: #000;
+                background: gold;
+                margin: 5px;
+                font-weight: 800;
+            }
+
+            .timeLineDetailsContainer {
+                margin: 10px;
+                background-color: #fff;
+                position: relative;
+                border-radius: 0 20px 20px 0;
+
+                .details {
+                    padding: 5px;
+                    font-size: 10px;
+                }
+
+                .vlUp, .vlDown {
+                    position: absolute;
+                    width: 5px;
+                    z-index: -1;
+                    left: 0%;
+                    background: #fff;
+                }
+
+                .vlUp {
+                    height: 80px;
+                    bottom: -30px;
+                }
+
+                .vlDown {
+                    height: 40px;
+                    top: -20px;
+                }
+               
+            }
+            
+        }
+        
+    }
+
+    .projectList {
+        position: relative;
+        .prevBtn, .nextBtn {
+            position: absolute;
+            z-index: 3;
+            border: 0;
+            height: 100%;
+            width: 50px;
+            box-shadow: 1px 2px 3px black;
+            background: rgba(0, 0, 0, 0.864);
+            color: #fff;
+        }
+
+        .projects {
+            display: inline-flex;
+            width: 80vw;
+            overflow: hidden;
+            position: relative;
+            // overflow-x: scroll; 
+
+            .project {
+                position: relative;
+          
+                img {
+                    width: 300px; /* width of container */
+                    height: 200px; /* height of container */
+                    object-fit: cover;
+                    margin: 3px;
+                    object-position: 50% 0;
+                }
+                
+                img:hover {
+                    transform: scale(1.1);
+                    transition: transform 2s;
+               
+                    z-index: 2;
+                }
+
+                .projectDesc {
+                    position: absolute;
+                    bottom: -10px;
+                    text-align: center;
+                    width: 100%;
+                    height: 47px;
+                    background-color: rgba(0, 0, 0, 0.63);
+                    color: #fff;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}

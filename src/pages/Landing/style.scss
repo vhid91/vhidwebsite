@@ -1,0 +1,55 @@
+@import '../../index.scss';
+
+.landing {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: $white;
+    background: $blackBg;
+    // background: url('https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif');
+	background-size: cover;
+	background-attachment: fixed;
+    height: 100%;
+    position: relative;
+
+    .exploreBtn {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        font-weight: 800;
+        z-index: 999;
+        font-size: 20px;
+    }
+
+    .exploreBtn:hover {
+        color: $hoverColor;
+        transition: color 2s;
+        cursor: pointer;
+    }
+
+    
+    .title {
+        font-size: 10vw;
+        font-family: 'rockwell';
+        text-shadow: 9px 10px 5px #222e40;
+        opacity: 0;
+        
+    }
+    center {
+        opacity: 0;
+    }
+    .subtitle {
+        text-align: center;
+        width: auto;
+        padding: 20px;
+        background-color: #111;
+        border-radius: 20px;
+        width: 60%;
+        margin-top: -20px;
+        font-size: 2vw;
+    }
+
+    p {
+        font-weight: 'Century Gothic';
+    }
+}
