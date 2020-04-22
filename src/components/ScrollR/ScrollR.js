@@ -1,70 +1,65 @@
-import React, { Component } from 'react'
-import './style.scss';
-import { withRouter } from 'react-router-dom';
-import _ from 'lodash'
+import React, { useState, useEffect, useRef } from "react";
+import "./style.scss";
+import { withRouter } from "react-router-dom";
+import _ from "lodash";
 
-class ScrollR extends Component {
-    constructor(props){
-        super(props);
-        this.handleScroll = this.handleScroll.bind(this)
-        this.isScrollDown = false
+const ScrollR = props => {
+    const { location, history } = props;
+    const currentLocation = location.pathname;
+    
+    useEffect(() => {
+        debounce()
+        return ()=> window.removeEventListener('wheel', handleScroll);
+    });
+    
+    const debounce = _.debounce(()=> window.addEventListener("wheel", handleScroll), 1500)
+    
+    const handleScroll = e => {
+        historyFun(currentLocation, e.deltaY < 0 ? false : true, history);
+    };
 
-        this.debounce = _.debounce(this.addListener, 1500);
-    }
+    const historyFun = (currentLocation, scroll, history) => {
+        
+        if (currentLocation === "/" && scroll) history.push("/about");
+        if (currentLocation === "/about" && !scroll) history.push("/");
+        if (currentLocation === "/about" && scroll) history.push("/work");
+        if (currentLocation === "/work" && !scroll) history.push("/about");
+        if (currentLocation === "/work" && scroll) history.push("/contact");
+        if (currentLocation === "/contact" && !scroll) history.push("/work");
+    };
+
+    const isUp = () => {
+        historyFun(location.pathname, false, history);
+    };
+    const isDown = () => {
+        historyFun(location.pathname, true, history);
+    };
 
     
-    
-    componentDidMount(){
-        window.addEventListener('wheel', this.handleScroll);
-    }
-    componentWillUnmount(){
-        window.removeEventListener('wheel', this.handleScroll);
-    }
-    handleScroll(e){
-        const { location, history } = this.props;
-        const currentLocation = location.pathname
-        this.isScrollDown = e.deltaY < 0 ? false : true
-        this.history(currentLocation, this.isScrollDown, history)
-    }
-    addListener(){
-        window.addEventListener('wheel', this.handleScroll);
-    }
-    scrollTimeOut(){
-        window.removeEventListener('wheel', this.handleScroll);
-        this.debounce()
-    }
-    history = (currentLocation, isScrollDown, history)=>{
-        if(currentLocation === "/" && isScrollDown) history.push("/about")
-        if(currentLocation === "/about" && !isScrollDown) history.push("/")
-        if(currentLocation === "/about" && isScrollDown) history.push("/work")
-        if(currentLocation === "/work" && !isScrollDown) history.push("/about")
-        if(currentLocation === "/work" && isScrollDown) history.push("/contact")
-        if(currentLocation === "/contact" && !isScrollDown) history.push("/work")
-        
-        this.scrollTimeOut()
-    }
-    isUp = () => {
-        const { location, history } = this.props;
-        this.history(location.pathname, false, history)
-    }
-    isDown = () => {
-        const { location, history } = this.props;
-        this.history(location.pathname, true, history)
-    }
-    render(){
-        
-        const { location } = this.props;
-        const currentLocation = location.pathname
-        return(
-            <div className="ScrollR" >
-                {currentLocation === "/" ? '' : <a onClick={this.isUp}><i className="fa fa-angle-up"></i></a>}
-                <br />
-                <span>Scroll</span>
-                <br />
-                {currentLocation !== "/contact" ? <a onClick={this.isDown}><i className="fa fa-angle-down"></i></a> : <span style={{opacity: 0}}><i className="fa fa-angle-down"></i></span>}
-            </div>
-        )
-    }
-}
 
-export default withRouter(ScrollR)
+    return (
+        <div className="ScrollR">
+            {currentLocation === "/" ? (
+                ""
+            ) : (
+                <a onClick={isUp}>
+                    <i className="fa fa-angle-up"></i>
+                </a>
+            )}
+            <br />
+            <span>Scroll</span>
+            <br />
+            {currentLocation !== "/contact" ? (
+                <a onClick={isDown}>
+                    <i className="fa fa-angle-down"></i>
+                </a>
+            ) : (
+                <span style={{ opacity: 0 }}>
+                    <i className="fa fa-angle-down"></i>
+                </span>
+            )}
+        </div>
+    );
+};
+
+export default withRouter(ScrollR);

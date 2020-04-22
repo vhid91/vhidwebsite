@@ -1,72 +1,66 @@
-import React, { Component } from 'react'
-import { projects } from './WorkData'
-import { skillType } from '../../config';
+import React, { useState } from "react";
+import { projects } from "./WorkData";
 
-class Projects extends Component {
-    constructor(props){
-        super(props);
+const Projects = props => {
+    const [isPrevBtnVisible, setIsPrevBtnVisible] = useState(false);
+    const [isNextBtnVisible, setIsNextBtnVisible] = useState(true);
+    const [x, setX] = useState(1)
 
-        this.state = {
-            isPrevBtnVisible : false,
-            isNextBtnVisible : true
+    const prev = () => {  
+        console.log(x)
+        if(x < 2) {
+            setX(x-1)
+            setIsPrevBtnVisible(false)
+            return
         }
+        setIsNextBtnVisible(true)
+        setX(x-1)
     }
 
-    isNextBtnFun = (status) => {
-        this.setState({
-            isNextBtnVisible : status
-        })
-    }
+    const next = () => {
+        console.log(x)
+        if(x >= (((projects.length / 2 | 0) - 1))) {
+            setX(x+1)
+            setIsNextBtnVisible(false)
+            return
+        }
+        setIsPrevBtnVisible(true)
+        setX(x+1)
+    };
 
-    next = (status, scrollLeft, scrollLeftMax) => {
-        this.setState({
-            isPrevBtnVisible : status
-        })
-
-        scrollLeft > scrollLeftMax ? this.isNextBtnFun(false) : this.isNextBtnFun(true)
-    }
-
-    prev = (scrollVal) =>{
-        var scrollLeft = document.getElementById("projects").scrollLeft += scrollVal;
-        var scrollLeftMax = document.getElementById("projects").scrollLeftMax
-
-        scrollLeft > 0 ? this.next(true, scrollLeft, scrollLeftMax) : this.next(false, scrollLeft, scrollLeftMax)
-    }
-
-    render() {
-        const { isPrevBtnVisible, isNextBtnVisible } = this.state
-        return (
-            <div>
-                <h2 class="subtitle">Projects</h2>
-                <div className="projectList">
-                    { isPrevBtnVisible ? (<button className="prevBtn" onClick={() => this.prev(-300)}>prev</button>) : null }
-                    <div id="projects" className="projects">
-                    
-                        { projects.map((project)=>
-                            <div
-                                className="project"
-                                key={project.name}
-                            >
-                                {project.img != "" ?
-                                    <a href={project.img} target="_blank"><img src={project.img}/></a> :
-                                    <div class="no-image-flex">
-                                        <h1 class="text-has-shadows">
-                                            {project.type}
-                                        </h1>
+    return (
+        <>
+            <h2 className="subtitle">Projects</h2>
+            <div className="projectList">
+                {isPrevBtnVisible ? (
+                    <button className="prevBtn" onClick={() => prev()}>
+                        prev
+                    </button>
+                ) : null}
+                <div id="projects" className="projects">
+                    {projects.slice((0+x),(4+x)).map((project) => (
+                        <div className="project" key={project.name}>
+                            {project.img != "" ? (
+                                <a href={project.img} target="_blank">
+                                    <img src={project.img} />
+                                </a>
+                            ) : (
+                                    <div className="no-image-flex">
+                                        <h1 className="text-has-shadows">{project.type}</h1>
                                     </div>
-                                }
-                                <p className="projectDesc">
-                                    {project.name}
-                                </p>
-                            </div>
-                        )}
-                    
-                    </div>
-                    { isNextBtnVisible ? (<button className="nextBtn" onClick={() => this.prev(300)}>next</button>) : null }
+                                )}
+                            <p className="projectDesc">{project.name}</p>
+                        </div>
+                    ))}
                 </div>
+                {isNextBtnVisible ? (
+                    <button className="nextBtn" onClick={() => next()}>
+                        next
+                    </button>
+                ) : null }
             </div>
-        )
-    }
-}
+        </>
+    );
+};
 
-export default Projects
+export default Projects;

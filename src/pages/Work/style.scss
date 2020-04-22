@@ -78,9 +78,14 @@
         .projects {
             display: inline-flex;
             width: 80vw;
-            overflow: hidden;
             position: relative;
-            // overflow-x: scroll; 
+            height: auto;
+
+            .project:hover {
+                transform: scale(1.2);
+                transition: transform 1s;
+                z-index: 999;
+            }
 
             .project {
                 position: relative;
@@ -93,13 +98,6 @@
                     object-position: 50% 0;
                 }
                 
-                img:hover {
-                    transform: scale(1.1);
-                    transition: transform 2s;
-               
-                    z-index: 2;
-                }
-
                 .projectDesc {
                     position: absolute;
                     bottom: -10px;
